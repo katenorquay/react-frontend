@@ -6,7 +6,7 @@ function Login({state, dispatch}) {
   function handleLogin(e) {
     e.preventDefault()
     const userInfo = {
-      username: document.getElementById('email').value,
+      email: document.getElementById('email').value,
       password: document.getElementById('password').value
     }
     dispatch({type: 'LOGIN_INIT'})
