@@ -8,6 +8,7 @@ const initialState = {
   loggedIn: false,
   loginInProgress: false,
   loginUnsuccessful: false,
+  signupUnsuccessful: false,
   currentUser: {}
 }
 

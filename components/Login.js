@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import request from 'superagent'
+import loginService from '../sharedAPI/loginService'
 
 function Login({state, dispatch}) {
 
@@ -9,18 +9,7 @@ function Login({state, dispatch}) {
       email: document.getElementById('email').value,
       password: document.getElementById('password').value
     }
-    dispatch({type: 'LOGIN_INIT'})
-    request
-      .post(`http://localhost:3000/auth/sign_in`)
-      .send(userInfo)
-      .withCredentials()
-      .end((err, res) => {
-        if (err) {
-          dispatch({type: 'LOGIN_UNSUCCESSFUL'})
-        } else {
-          dispatch({type: 'LOGIN_SUCCESSFUL', payload: res.body.user})
-        }
-      })
+    loginService(userInfo, dispatch)
   }
 
   return (
