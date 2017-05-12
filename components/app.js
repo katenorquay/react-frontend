@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Login from './Login'
 import Signup from './Signup'
+import Edit from './Edit'
 
 function App({state, dispatch}) {
   if (!state.loggedIn) {
@@ -8,12 +9,11 @@ function App({state, dispatch}) {
       <div>
         <Login state={state} dispatch={dispatch} />
         <Signup state={state} dispatch={dispatch} />
-        <h2>Sign up instead!</h2>
       </div>
     )
   } else {
     return (
-      <h2>oh hey gurl</h2>
+      <Edit state={state} dispatch={dispatch} />
     )
   }
 }
