@@ -1,5 +1,20 @@
 import React from 'react'
 import { render } from 'react-dom'
 import App from './components/app'
+import reducer from './reducer.js'
+import {createStore} from 'redux'
 
-render(<App name='react-frontend' />, document.querySelector('main'))
+const initialState = {
+  loggedIn: false,
+  loginInProgress: false,
+  loginUnsuccessful: false,
+  currentUser: {}
+}
+
+const store = createStore(reducer, initialState)
+store.subscribe( () => {
+  var state = store.getState()
+  render(<App state={state} dispatch={store.dispatch} />, document.querySelector('main'))
+})
+
+store.dispatch({type: 'INIT'})

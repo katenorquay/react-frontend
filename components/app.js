@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
+import Login from './Login'
 
-class App extends Component {
-
-  constructor (props) {
-    super(props)
+function App({state, dispatch}) {
+  if (!state.loggedIn) {
+    return (
+      <div>
+        <Login state={state} dispatch={dispatch} />
+        <h2>Sign up instead!</h2>
+      </div>
+    )
+  } else {
+    return (
+      <h2>oh hey gurl</h2>
+    )
   }
-
-  render () {
-    return <h1>Welcome to {this.props.name}</h1>
-  }
-
 }
 
 export default App
