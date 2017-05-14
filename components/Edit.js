@@ -5,13 +5,21 @@ function Edit({state, dispatch}) {
   function handleUpdate(e) {
     e.preventDefault()
     const userInfo = {
-      email: document.getElementById('currentEmail').value,
+      email: state.currentUser.uid,
       password: document.getElementById('newPassword').value,
       password_confirmation: document.getElementById('confirmNewPassword').value,
       current_password: document.getElementById('currentPassword').value
     }
+    console.log(state.currentUser)
     request
-      .patch(`http://localhost:3000/auth/password`)
+      .put(`http://localhost:3000/auth`)
+      .set({
+        'access-token': "#{state.currentUser.access-token}",
+        'token-type': '#{state.currentUser.token-type}',
+        'client': '#{state.currentUser.client}',
+        'expiry': '#{state.currentUser.expiry}',
+        'uid': '#{state.currentUser.uid}'
+      })
       .send(userInfo)
       .withCredentials()
       .end((err, res) => {
@@ -25,9 +33,8 @@ function Edit({state, dispatch}) {
 
   return (
     <div>
-      <h2>Log in</h2>
+      <h2>Edit Account</h2>
       <form>
-        <input id='currentEmail' placeholder='email'/>
         <input id='newPassword' placeholder=' new password'/>
         <input id='confirmNewPassword' placeholder='retype new password'/>
         <input id='currentPassword' placeholder='current password'/>

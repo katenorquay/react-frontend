@@ -11,7 +11,6 @@ function reducer(state, action) {
       newState.loginInProgress = false
       newState.loginUnsuccessful = false
       newState.loggedIn = true
-      newState.signupUnsuccessful = false;
       newState.currentUser = payload
       return newState
     case 'LOGIN_UNSUCCESSFUL':
