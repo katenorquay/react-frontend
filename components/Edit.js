@@ -10,15 +10,14 @@ function Edit({state, dispatch}) {
       password_confirmation: document.getElementById('confirmNewPassword').value,
       current_password: document.getElementById('currentPassword').value
     }
-    console.log(state.currentUser)
     request
       .put(`http://localhost:3000/auth`)
       .set({
-        'access-token': "#{state.currentUser.access-token}",
-        'token-type': '#{state.currentUser.token-type}',
-        'client': '#{state.currentUser.client}',
-        'expiry': '#{state.currentUser.expiry}',
-        'uid': '#{state.currentUser.uid}'
+        'access-token': state.currentUser['access-token'],
+        'token-type': state.currentUser['token-type'],
+        'client': state.currentUser.client,
+        'expiry': state.currentUser.expiry,
+        'uid': state.currentUser.uid
       })
       .send(userInfo)
       .withCredentials()
@@ -27,6 +26,26 @@ function Edit({state, dispatch}) {
           console.log(err)
         } else {
           console.log('woo hoo')
+        }
+      })
+  }
+
+  function signOut(e) {
+    e.preventDefault()
+    request
+      .delete(`http://localhost:3000/auth/sign_out`)
+      .set({
+        'access-token': state.currentUser['access-token'],
+        'token-type': state.currentUser['token-type'],
+        'client': state.currentUser.client,
+        'expiry': state.currentUser.expiry,
+        'uid': state.currentUser.uid
+      })
+      .end((err, res) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log(res)
         }
       })
   }
@@ -40,7 +59,7 @@ function Edit({state, dispatch}) {
         <input id='currentPassword' placeholder='current password'/>
         <button onClick={handleUpdate}>Submit</button>
       </form>
-      <h3>Cancel my account</h3>
+      <button onClick={signOut}>Sign Out</button>
     </div>
   )
 }

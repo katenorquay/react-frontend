@@ -8,6 +8,7 @@ function reducer(state, action) {
       newState.loginInProgress = true
       return newState
     case 'LOGIN_SUCCESSFUL':
+      console.log(payload)
       newState.loginInProgress = false
       newState.loginUnsuccessful = false
       newState.loggedIn = true

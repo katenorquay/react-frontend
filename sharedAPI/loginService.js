@@ -10,7 +10,6 @@ function loginService(userInfo, dispatch) {
       if (err) {
         dispatch({type: 'LOGIN_UNSUCCESSFUL'})
       } else {
-        console.log(res.header)
         dispatch({type: 'LOGIN_SUCCESSFUL', payload: res.header})
       }
     })
