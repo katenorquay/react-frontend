@@ -10,7 +10,7 @@ const initialState = {
   loginUnsuccessful: false,
   signupUnsuccessful: false,
   editingSuccessful: false,
-  newSignUp: false,
+  signUp: false,
   currentUser: {}
 }
 

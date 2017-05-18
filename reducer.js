@@ -30,7 +30,7 @@ function reducer(state, action) {
       newState.editingSuccessful = true
       return newState
     case 'TOGGLE_SIGNUP_LOGIN':
-      newState.newSignUp = !newState.newSignUp
+      newState.signUp = !newState.signUp
       return newState
     default:
       return newState
