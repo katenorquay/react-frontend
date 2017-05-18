@@ -1,6 +1,6 @@
 var test = require('tape')
 
-test('testing react-frontend', function (t) {
+test('test setup working', function (t) {
   t.ok(true)
   t.end()
 })

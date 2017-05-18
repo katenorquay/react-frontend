@@ -24,13 +24,15 @@ function reducer(state, action) {
       newState.loggedIn = false
       newState.editingSuccessful = false
       newState.currentUser = {}
-      newState.newSignUp = false
+      newState.signUp = false
       return newState
     case 'EDITING':
       newState.editingSuccessful = true
       return newState
     case 'TOGGLE_SIGNUP_LOGIN':
       newState.signUp = !newState.signUp
+      newState.signupUnsuccessful = false
+      newState.loginUnsuccessful = false
       return newState
     default:
       return newState

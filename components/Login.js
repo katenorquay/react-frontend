@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import loginService from '../API/loginService'
 import signupService from '../API/signUpService'
 
-function LoginScreen({state, dispatch, headerText}) {
+function Login({state, dispatch, headerText}) {
   const inputClass = state.signUp ? '' : 'hidden'
+  const loginError = state.loginUnsuccessful ? '' : 'hidden'
+  const signupError = state.signupUnsuccessful ? '' : 'hidden'
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -12,11 +14,8 @@ function LoginScreen({state, dispatch, headerText}) {
         password: document.getElementById('password').value,
     }
     if (state.signUp) {
-      userInfo.password_confirmation = document.getElementById('password_confirmation').value
-      userInfo.email = userInfo.username
       signupService(userInfo, dispatch)
     } else {
-      userInfo.grant_type = 'password'
       loginService(userInfo, dispatch)
     }
   }
@@ -28,10 +27,12 @@ function LoginScreen({state, dispatch, headerText}) {
         <input id='username' placeholder='email'/>
         <input id='password' placeholder='password'/>
         <input className={inputClass} id='password_confirmation' placeholder='retype password'/>
+        <p className={loginError}>Email or password was not recognised</p>
+        <p className={signupError}>There was an error creating your account</p>
         <button onClick={handleSubmit}>Submit</button>
       </form>
     </div>
   )
 }
 
-export default LoginScreen
+export default Login

@@ -1,17 +1,10 @@
 import React, { Component } from 'react'
-import Login from './Login'
-import Signup from './Signup'
 import Edit from './Edit'
-import LoginScreen from './LoginScreen'
+import Login from './Login'
+import generateLabels from '../helpers/generateLabels'
 
 function App({state, dispatch}) {
-  if (state.signUp) {
-    var buttonText = 'Log In!'
-    var headerText = 'Sign In!'
-  } else {
-    buttonText = 'Sign In!'
-    headerText = 'Log In!'
-  }
+  var labels = generateLabels(state.signUp)
   if (state.loggedIn) {
     return (
       <Edit state={state} dispatch={dispatch} />
@@ -19,8 +12,8 @@ function App({state, dispatch}) {
   } else {
     return (
       <div>
-        <button onClick={()=>{dispatch({type:'TOGGLE_SIGNUP_LOGIN'})}}>{buttonText}</button>
-        <LoginScreen state={state} dispatch={dispatch} headerText={headerText} />
+        <button onClick={()=>{dispatch({type:'TOGGLE_SIGNUP_LOGIN'})}}>{labels.button}</button>
+        <Login state={state} dispatch={dispatch} headerText={labels.title} />
       </div>
     )
   }

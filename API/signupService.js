@@ -2,6 +2,8 @@ import request from 'superagent'
 import loginService from './loginService'
 
 function signupService(userInfo, dispatch) {
+  userInfo.password_confirmation = document.getElementById('password_confirmation').value
+  userInfo.email = userInfo.username
   dispatch({type: 'LOGIN_INIT'})
   request
     .post(`http://localhost:3000/v1/users`)
