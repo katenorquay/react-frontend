@@ -5,23 +5,37 @@ function Login({state, dispatch}) {
 
   function handleLogin(e) {
     e.preventDefault()
-    const userInfo = {
-      email: document.getElementById('email').value,
-      password: document.getElementById('password').value
+    var userInfo = {
+      username: document.getElementById('username').value,
+      password: document.getElementById('password').value,
+      grant_type: 'password'
     }
     loginService(userInfo, dispatch)
   }
-
-  return (
-    <div>
-      <h2>Log in</h2>
-      <form>
-        <input id='email' placeholder='email'/>
-        <input id='password' placeholder='password'/>
-        <button onClick={handleLogin}>Submit</button>
-      </form>
-    </div>
-  )
+  if (state.loginUnsuccessful) {
+    return (
+      <div>
+        <h2>Log in</h2>
+        <form>
+          <input id='username' placeholder='email'/>
+          <input id='password' placeholder='password'/>
+          <button onClick={handleLogin}>Submit</button>
+        </form>
+        <p>Email or password is incorrect</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <h2>Log in</h2>
+        <form>
+          <input id='username' placeholder='email'/>
+          <input id='password' placeholder='password'/>
+          <button onClick={handleLogin}>Submit</button>
+        </form>
+      </div>
+    )
+  }
 }
 
 export default Login

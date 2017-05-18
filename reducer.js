@@ -8,11 +8,10 @@ function reducer(state, action) {
       newState.loginInProgress = true
       return newState
     case 'LOGIN_SUCCESSFUL':
-      console.log(payload)
       newState.loginInProgress = false
       newState.loginUnsuccessful = false
       newState.loggedIn = true
-      newState.currentUser = payload
+      newState.currentUser = payload.user
       return newState
     case 'LOGIN_UNSUCCESSFUL':
       newState.loginInProgress = false
@@ -20,6 +19,19 @@ function reducer(state, action) {
       return newState
     case 'SIGNUP_UNSUCCESSFUL':
       newState.signupUnsuccessful = true
+      return newState
+    case 'SIGNOUT':
+      newState.loggedIn = false
+      newState.editingSuccessful = false
+      newState.currentUser = {}
+      newState.newSignUp = false
+      return newState
+    case 'EDITING':
+      newState.editingSuccessful = true
+      return newState
+    case 'TOGGLE_SIGNUP_LOGIN':
+      newState.newSignUp = !newState.newSignUp
+      return newState
     default:
       return newState
   }

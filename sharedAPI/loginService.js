@@ -3,14 +3,15 @@ import request from 'superagent'
 function loginService(userInfo, dispatch) {
   dispatch({type: 'LOGIN_INIT'})
   request
-    .post(`http://localhost:3000/auth/sign_in`)
+    .post(`http://localhost:3000/v1/sessions`)
     .send(userInfo)
-    .withCredentials()
     .end((err, res) => {
       if (err) {
+        console.log(err)
         dispatch({type: 'LOGIN_UNSUCCESSFUL'})
       } else {
-        dispatch({type: 'LOGIN_SUCCESSFUL', payload: res.header})
+        console.log(res)
+        dispatch({type: 'LOGIN_SUCCESSFUL', payload: {user: res.body}})
       }
     })
   }

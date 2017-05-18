@@ -1,31 +1,30 @@
 import React, { Component } from 'react'
 import request from 'superagent'
+import EditConfirmation from './EditConfirmation'
 
 function Edit({state, dispatch}) {
+  console.log(state.currentUser)
   function handleUpdate(e) {
     e.preventDefault()
-    const userInfo = {
-      email: state.currentUser.uid,
-      password: document.getElementById('newPassword').value,
-      password_confirmation: document.getElementById('confirmNewPassword').value,
-      current_password: document.getElementById('currentPassword').value
+    var userInfo = {
+      user: {
+        username: state.currentUser.email,
+        email: state.currentUser.email,
+        password: document.getElementById('newPassword').value,
+        password_confirmation: document.getElementById('confirmNewPassword').value,
+      }
     }
+    var token = state.currentUser.access_token
+    console.log(token)
     request
-      .put(`http://localhost:3000/auth`)
-      .set({
-        'access-token': state.currentUser['access-token'],
-        'token-type': state.currentUser['token-type'],
-        'client': state.currentUser.client,
-        'expiry': state.currentUser.expiry,
-        'uid': state.currentUser.uid
-      })
+      .put("http://localhost:3000/v1/users/5")
+      .set('Authorization', token)
       .send(userInfo)
-      .withCredentials()
       .end((err, res) => {
         if (err) {
           console.log(err)
         } else {
-          console.log('woo hoo')
+          dispatch({type: 'EDITING'})
         }
       })
   }
@@ -33,21 +32,34 @@ function Edit({state, dispatch}) {
   function signOut(e) {
     e.preventDefault()
     request
-      .delete(`http://localhost:3000/auth/sign_out`)
-      .set({
-        'access-token': state.currentUser['access-token'],
-        'token-type': state.currentUser['token-type'],
-        'client': state.currentUser.client,
-        'expiry': state.currentUser.expiry,
-        'uid': state.currentUser.uid
-      })
+      .delete(`http://localhost:3000/v1/sessions`)
       .end((err, res) => {
         if (err) {
           console.log(err)
         } else {
-          console.log(res)
+          dispatch({type: 'SIGNOUT'})
         }
       })
+  }
+
+  function handleDelete(e) {
+    e.preventDefault()
+    var userInfo = {
+      user: {
+        email: state.currentUser.email,
+      }
+    }
+    request
+      .delete(`http://localhost:3000/v1/users/5`)
+      .set('Authorization', state.currentUser.access_token)
+      .send(userInfo)
+    .end((err, res) => {
+      if (err) {
+        console.log(err)
+      } else {
+        dispatch({type: 'SIGNOUT'})
+      }
+    })
   }
 
   return (
@@ -56,10 +68,11 @@ function Edit({state, dispatch}) {
       <form>
         <input id='newPassword' placeholder=' new password'/>
         <input id='confirmNewPassword' placeholder='retype new password'/>
-        <input id='currentPassword' placeholder='current password'/>
         <button onClick={handleUpdate}>Submit</button>
+        <EditConfirmation state={state} />
       </form>
       <button onClick={signOut}>Sign Out</button>
+      <button onClick={handleDelete}>Delete Account</button>
     </div>
   )
 }

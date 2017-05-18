@@ -6,22 +6,24 @@ function Signup({state, dispatch}) {
 
   function handleSignup(e) {
     e.preventDefault()
-    const userInfo = {
+    var userInfo = {
+      user: {
         email: document.getElementById('signupEmail').value,
         password: document.getElementById('signupPassword').value,
-        password_confirmation: document.getElementById('password_confirmation').value
+        password_confirmation: document.getElementById('password_confirmation').value,
+        username: document.getElementById('signupEmail').value
+      }
     }
     dispatch({type: 'LOGIN_INIT'})
     request
-      .post(`http://localhost:3000/auth`)
+      .post(`http://localhost:3000/v1/users`)
       .send(userInfo)
-      .withCredentials()
       .end((err, res) => {
         if (err) {
           console.log(err)
           dispatch({type: 'SIGNUP_UNSUCCESSFUL'})
         } else {
-          loginService({email: userInfo.email, password: userInfo.password}, dispatch)
+          loginService({username: userInfo.user.email, password: userInfo.user.password, grant_type: 'password'}, dispatch)
         }
       })
   }

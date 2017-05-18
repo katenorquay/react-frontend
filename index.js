@@ -9,6 +9,8 @@ const initialState = {
   loginInProgress: false,
   loginUnsuccessful: false,
   signupUnsuccessful: false,
+  editingSuccessful: false,
+  newSignUp: false,
   currentUser: {}
 }
 
